@@ -1,7 +1,8 @@
 import streamlit as st
 import numpy as np
 import joblib
-
+import torch
+from diffusers import DiffusionPipeline
 import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -22,21 +23,21 @@ input_text = st.text_area(
     placeholder="Tortoise and the hare"
 )
 
-
 tokenizer_path = "models/tokenizer.joblib"
 model_path = "models/model-initial.h5"
 seq_length = 100
 
+# Diffusion pipeline setup for image generation
+pipe = DiffusionPipeline.from_pretrained("stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16, use_safetensors=True, variant="fp16")
+pipe.to("cuda")
 
 def load_tokenizer(tokenizer_path):
     tokenizer = joblib.load(tokenizer_path)
     return tokenizer
 
-
 def load_saved_model(model_path):
     model = load_model(model_path)
     return model
-
 
 def generate_text_base_word(tokenizer_path, model_path, seed_text, num_words):
     tokenizer, model = load_tokenizer(tokenizer_path), load_model(model_path)
@@ -64,7 +65,6 @@ def generate_text_base_word(tokenizer_path, model_path, seed_text, num_words):
     
     return ' '.join(result)
 
-
 # Button and spinner
 if st.button("Generate Story"):
     if input_text:
@@ -73,5 +73,12 @@ if st.button("Generate Story"):
         st.success("Generation complete!")
         st.write("###### -------- Generated Text --------")
         st.write(generated_text)
+        
+        # Generate the image based on the story generated
+        image_prompt = "A scene from the folktale: " + generated_text[:50]  # Use a snippet of the text as a prompt
+        image = pipe(prompt=image_prompt).images[0]
+        
+        # Display the image below the story
+        st.image(image, caption="Generated Image from the Story", use_column_width=True)
     else:
         st.warning("Please enter story to generate.")

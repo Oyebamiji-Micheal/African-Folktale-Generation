@@ -85,9 +85,9 @@ if st.button("Generate Story"):
         st.write(generated_text)
         
         # Generate the image based on the story
-        image_prompt = "A scene from the folktale: " + generated_text[:50]  # Use part of the generated text as a prompt
+        # image_prompt = "A scene from the folktale: " + generated_text[:50]  # Use part of the generated text as a prompt
         with st.spinner("Generating image..."):
-            image = generate_image(image_prompt)
+            image = generate_image(input_text)
         
         # Display the generated image
         st.image(image, caption="Generated Image from the Story", use_column_width=True)

@@ -5,6 +5,7 @@ import time
 from diffusers import StableDiffusionPipeline
 from PIL import Image
 
+import torch
 import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences

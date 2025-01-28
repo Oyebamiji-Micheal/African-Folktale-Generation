@@ -24,7 +24,7 @@ input_text = st.text_area(
 
 
 tokenizer_path = "models/tokenizer.joblib"
-model_path = "models/model.h5"
+model_path = "models/model-initial.h5"
 seq_length = 100
 
 
@@ -33,7 +33,7 @@ def load_tokenizer(tokenizer_path):
     return tokenizer
 
 
-def load_model(model_path):
+def load_saved_model(model_path):
     model = load_model(model_path)
     return model
 

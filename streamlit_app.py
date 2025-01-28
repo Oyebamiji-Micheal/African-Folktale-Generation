@@ -69,9 +69,9 @@ def generate_text_base_word(tokenizer_path, model_path, seed_text, num_words):
 if st.button("Generate Story"):
     if input_text:
         with st.spinner("Generating, please wait..."):
-            generated_text = generate_text_base_word(tokenizer_path, model_path, input_text, 300)
+            generated_text = generate_text_base_word(tokenizer_path, model_path, input_text, 200)
         st.success("Generation complete!")
-        st.write("##### == Generated Text ====")
+        st.write("###### -------- Generated Text --------")
         st.write(generated_text)
     else:
-        st.warning("Please enter text to translate.")
+        st.warning("Please enter story to generate.")

@@ -6,5 +6,5 @@ invisible_watermark
 transformers 
 accelerate 
 safetensors 
-diffusers
+diffusers==0.32.2
 joblib

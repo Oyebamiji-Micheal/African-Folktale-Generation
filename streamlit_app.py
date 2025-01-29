@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import joblib
+import pickle
 import time
 from diffusers import StableDiffusionPipeline
 from PIL import Image
@@ -24,8 +25,8 @@ input_text = st.text_area(
     placeholder="Tortoise and the hare"
 )
 
-tokenizer_path = "models/tokenizer.joblib"
-model_path = "models/model-initial.h5"
+tokenizer_path = "models/tokenizer_final.pkl"
+model_path = "models/model_final.h5"
 seq_length = 100
 
 # Creating pipeline for Stable Diffusion
@@ -35,7 +36,7 @@ pipeline = StableDiffusionPipeline.from_pretrained(
 )
 
 def load_tokenizer(tokenizer_path):
-    tokenizer = joblib.load(tokenizer_path)
+    tokenizer = pickle.load(tokenizer_path)
     return tokenizer
 
 def load_saved_model(model_path):
